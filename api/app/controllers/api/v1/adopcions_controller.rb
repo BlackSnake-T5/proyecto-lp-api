@@ -1,44 +1,44 @@
 class Api::V1::AdopcionsController < ApplicationController
     
-    # GET /adopcions
+    # GET /Adopcions
     def index
-        @Adopcions = Adopcions.all
+        @Adopcions = Adopcion.all
         render json: @Adopcions
     end
 
-    # GET /adopcions/:id
+    # GET /Adopcions/:id
     def get
-        @Adopcions = Adopcions.find(params[:id])
-        render json: @Adopcions
+        @Adopcion = Adopcion.find(params[:id])
+        render json: @Adopcion
     end
 
-    # POST /adopcions
+    # POST /Adopcions
     def create
-        @Adopcions = Adopcions.new(Adopcions_params)
-        if @Adopcions.save
-            render json: @Adopcions
+        @Adopcion = Adopcion.new(Adopcion_params)
+        if @Adopcion.save
+            render json: @Adopcion
         else
             render error: { error: "No se pudo crear el mascota"}, status: 400
         end
 
     end
 
-    # UPDATE /adopcions/:id
+    # UPDATE /Adopcions/:id
     def update
-        @Adopcions = Adopcions.find(params[:id])
-        if @Adopcions
-            @Adopcions.update(Adopcions_params)
+        @Adopcion = Adopcion.find(params[:id])
+        if @Adopcion
+            @Adopcion.update(Adopcion_params)
             render error: { error: "Mascota actualizada con éxito!"}, status: 200
         else
             render error: { error: "No se pudo actualizar el mascota!"}, status: 400
         end
     end
 
-    # DELETE /adopcions/:id
+    # DELETE /Adopcions/:id
     def destroy
-        @Adopcions = Adopcions.find(params[:id])
-        if @Adopcions
-            @Adopcions.state = false
+        @Adopcion = Adopcion.find(params[:id])
+        if @Adopcion
+            @Adopcion.state = false
             render error: { error: "Mascota eliminado con éxito!"}, status: 200
         else
             render error: { error: "No se pudo actualizar el mascota!"}, status: 400
@@ -47,8 +47,8 @@ class Api::V1::AdopcionsController < ApplicationController
 
     private 
 
-    def Adopcions_params
-        params.require(:Adopcions).permit(:Adopcionsname,:password)
+    def Adopcion_params
+        params.require(:Adopcion).permit(:Adopcionname,:password)
     end
 
 
