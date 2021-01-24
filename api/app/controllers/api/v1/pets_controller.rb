@@ -1,44 +1,44 @@
 class Api::V1::PetsController < ApplicationController
     
-    # GET /users
+    # GET /pets
     def index
-        @users = User.all
-        render json: @users
+        @Pets = Pet.all
+        render json: @Pets
     end
 
-    # GET /users/:id
+    # GET /pets/:id
     def get
-        @user = User.find(params[:id])
-        render json: @user
+        @Pet = Pet.find(params[:id])
+        render json: @Pet
     end
 
-    # POST /users
+    # POST /pets
     def create
-        @user = User.new(user_params)
-        if @user.save
-            render json: @user
+        @Pet = Pet.new(Pet_params)
+        if @Pet.save
+            render json: @Pet
         else
             render error: { error: "No se pudo crear el mascota"}, status: 400
         end
 
     end
 
-    # UPDATE /users/:id
+    # UPDATE /pets/:id
     def update
-        @user = User.find(params[:id])
-        if @user
-            @user.update(user_params)
+        @Pet = Pet.find(params[:id])
+        if @Pet
+            @Pet.update(Pet_params)
             render error: { error: "Mascota actualizada con éxito!"}, status: 200
         else
             render error: { error: "No se pudo actualizar el mascota!"}, status: 400
         end
     end
 
-    # DELETE /users/:id
+    # DELETE /pets/:id
     def destroy
-        @user = User.find(params[:id])
-        if @user
-            @user.state = false
+        @Pet = Pet.find(params[:id])
+        if @Pet
+            @Pet.state = false
             render error: { error: "Mascota eliminado con éxito!"}, status: 200
         else
             render error: { error: "No se pudo actualizar el mascota!"}, status: 400
@@ -47,8 +47,8 @@ class Api::V1::PetsController < ApplicationController
 
     private 
 
-    def user_params
-        params.require(:user).permit(:username,:password)
+    def Pet_params
+        params.require(:Pet).permit(:Petname,:password)
     end
 
 

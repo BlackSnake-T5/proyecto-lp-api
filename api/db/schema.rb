@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_025551) do
+ActiveRecord::Schema.define(version: 2021_01_24_165600) do
 
-  create_table "pets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "adopcions", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "adopter_id", null: false
+    t.bigint "donante_id", null: false
+    t.bigint "pets_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["adopter_id"], name: "index_adopcions_on_adopter_id"
+    t.index ["donante_id"], name: "index_adopcions_on_donante_id"
+    t.index ["pets_id"], name: "index_adopcions_on_pets_id"
+  end
+
+  create_table "pets", charset: "utf8mb4", force: :cascade do |t|
     t.string "type"
     t.string "breed"
     t.integer "age"
@@ -21,22 +32,22 @@ ActiveRecord::Schema.define(version: 2021_01_24_025551) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "profiles", charset: "utf8mb4", force: :cascade do |t|
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "username"
     t.string "password"
     t.string "email"
-    t.bigint "profile_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "state", default: true
-    t.index ["profile_id"], name: "index_users_on_profile_id"
   end
 
-  add_foreign_key "users", "profiles"
+  add_foreign_key "adopcions", "pets", column: "pets_id"
+  add_foreign_key "adopcions", "users", column: "adopter_id"
+  add_foreign_key "adopcions", "users", column: "donante_id"
 end
