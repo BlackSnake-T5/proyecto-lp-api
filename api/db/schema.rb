@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_165600) do
+ActiveRecord::Schema.define(version: 2021_01_25_034542) do
 
-  create_table "adopcions", charset: "utf8mb4", force: :cascade do |t|
+  create_table "adopcions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "adopter_id", null: false
     t.bigint "donante_id", null: false
     t.bigint "pets_id", null: false
-    t.boolean "entregado"
+    t.string "entregado", default: "no-entregado"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["adopter_id"], name: "index_adopcions_on_adopter_id"
@@ -24,24 +24,25 @@ ActiveRecord::Schema.define(version: 2021_01_24_165600) do
     t.index ["pets_id"], name: "index_adopcions_on_pets_id"
   end
 
-  create_table "pets", charset: "utf8mb4", force: :cascade do |t|
-    t.string "type"
+  create_table "pets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "type_of_pet"
     t.string "breed"
     t.integer "age"
     t.string "gender"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
   end
 
-  create_table "profiles", charset: "utf8mb4", force: :cascade do |t|
+  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "username"
-    t.string "password"
+    t.string "password_digest"
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

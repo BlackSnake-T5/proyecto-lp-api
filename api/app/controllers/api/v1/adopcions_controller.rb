@@ -7,18 +7,18 @@ class Api::V1::AdopcionsController < ApplicationController
     end
 
     # GET /Adopcions/:id
-    def get
+    def show
         @Adopcion = Adopcion.find(params[:id])
         render json: @Adopcion
     end
 
     # POST /Adopcions
     def create
-        @Adopcion = Adopcion.new(Adopcion_params)
+        @Adopcion = Adopcion.new(adopcion_params)
         if @Adopcion.save
             render json: @Adopcion
         else
-            render error: { error: "No se pudo crear el mascota"}, status: 400
+            render json: { error: "No se pudo crear el mascota"}, status: 400
         end
 
     end
@@ -27,10 +27,10 @@ class Api::V1::AdopcionsController < ApplicationController
     def update
         @Adopcion = Adopcion.find(params[:id])
         if @Adopcion
-            @Adopcion.update(Adopcion_params)
-            render error: { error: "Mascota actualizada con éxito!"}, status: 200
+            @Adopcion.update(adopcion_params)
+            render json: { response: "Mascota actualizada con éxito!"}, status: 200
         else
-            render error: { error: "No se pudo actualizar el mascota!"}, status: 400
+            render json: { error: "No se pudo actualizar el mascota!"}, status: 400
         end
     end
 
@@ -39,16 +39,16 @@ class Api::V1::AdopcionsController < ApplicationController
         @Adopcion = Adopcion.find(params[:id])
         if @Adopcion
             @Adopcion.state = false
-            render error: { error: "Mascota eliminado con éxito!"}, status: 200
+            render json: { response: "Mascota eliminado con éxito!"}, status: 200
         else
-            render error: { error: "No se pudo actualizar el mascota!"}, status: 400
+            render json: { error: "No se pudo actualizar el mascota!"}, status: 400
         end
     end
 
     private 
 
-    def Adopcion_params
-        params.require(:Adopcion).permit(:Adopcionname,:password)
+    def adopcion_params
+        params.require(:adopcion).permit(:adopter_id,:donante_id,:pets_id)
     end
 
 
