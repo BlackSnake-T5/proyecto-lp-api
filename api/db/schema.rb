@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2021_01_24_165600) do
     t.bigint "adopter_id", null: false
     t.bigint "donante_id", null: false
     t.bigint "pets_id", null: false
+    t.boolean "entregado"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["adopter_id"], name: "index_adopcions_on_adopter_id"

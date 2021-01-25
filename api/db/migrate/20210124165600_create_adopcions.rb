@@ -4,6 +4,8 @@ class CreateAdopcions < ActiveRecord::Migration[6.1]
       t.references :adopter, null: false
       t.references :donante, null: false
       t.references :pets, null: false, foreign_key: true
+      t.boolean :entregado
+      
 
 
       t.timestamps
