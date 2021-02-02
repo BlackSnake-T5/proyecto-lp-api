@@ -13,7 +13,7 @@ class Api::V1::PetsController < ApplicationController
     end
 
     def filtering_params(params)
-        params.slice(:breed, :type, :gender)
+        params.slice(:breed, :type, :gender, :adopted)
     end
 
     # GET /pets/:id

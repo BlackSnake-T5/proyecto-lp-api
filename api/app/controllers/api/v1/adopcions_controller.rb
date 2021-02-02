@@ -2,21 +2,28 @@ class Api::V1::AdopcionsController < ApplicationController
     
     # GET /Adopcions
     def index
-        @Adopcions = Adopcion.all
-        render json: @Adopcions
+        @adopcions = Adopcion.where(nil)
+        filtering_params(params).each do |key, value|
+            @adopcions = @adopcions.public_send("by_#{key}",value) if value.present?
+        end
+        render json: @adopcions
+    end
+
+    def filtering_params(params)
+        params.slice(:pet, :adopter, :donante)
     end
 
     # GET /Adopcions/:id
     def show
-        @Adopcion = Adopcion.find(params[:id])
-        render json: @Adopcion
+        @adopcion = Adopcion.find(params[:id])
+        render json: @adopcion
     end
 
     # POST /Adopcions
     def create
-        @Adopcion = Adopcion.new(adopcion_params)
-        if @Adopcion.save
-            render json: @Adopcion
+        @adopcion = Adopcion.new(adopcion_params)
+        if @adopcion.save
+            render json: @adopcion
         else
             render json: { error: "No se pudo crear el mascota"}, status: 400
         end
@@ -25,9 +32,15 @@ class Api::V1::AdopcionsController < ApplicationController
 
     # UPDATE /Adopcions/:id
     def update
-        @Adopcion = Adopcion.find(params[:id])
-        if @Adopcion
-            @Adopcion.update(adopcion_params)
+        @adopcion = Adopcion.find(params[:id])
+        if @adopcion
+            unless adopcion_params[:adopter_id].nil?
+                pet = Pet.find(@adopcion.pets_id)
+                if pet
+                    pet.update_attribute(:adopted, true)
+                end
+            end
+            @adopcion.update(adopcion_params)
             render json: { response: "Mascota actualizada con éxito!"}, status: 200
         else
             render json: { error: "No se pudo actualizar el mascota!"}, status: 400
@@ -36,9 +49,9 @@ class Api::V1::AdopcionsController < ApplicationController
 
     # DELETE /Adopcions/:id
     def destroy
-        @Adopcion = Adopcion.find(params[:id])
-        if @Adopcion
-            @Adopcion.state = false
+        @adopcion = Adopcion.find(params[:id])
+        if @adopcion
+            
             render json: { response: "Mascota eliminado con éxito!"}, status: 200
         else
             render json: { error: "No se pudo actualizar el mascota!"}, status: 400
