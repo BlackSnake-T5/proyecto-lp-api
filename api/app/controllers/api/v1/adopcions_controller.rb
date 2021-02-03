@@ -9,10 +9,6 @@ class Api::V1::AdopcionsController < ApplicationController
         render json: @adopcions
     end
 
-    def filtering_params(params)
-        params.slice(:pet, :adopter, :donante)
-    end
-
     # GET /Adopcions/:id
     def show
         @adopcion = Adopcion.find(params[:id])
@@ -62,6 +58,10 @@ class Api::V1::AdopcionsController < ApplicationController
 
     def adopcion_params
         params.require(:adopcion).permit(:adopter_id,:donante_id,:pets_id)
+    end
+
+    def filtering_params(params)
+        params.slice(:pet, :adopter, :donante)
     end
 
 
